@@ -20,3 +20,6 @@ Possibly generate serial numbers for links. Time with microseconds may be a bad 
 
 
 6. Make everything localiz(able|ed).
+
+
+7. Prettify database schema (e.g. fix my stupid column names). Consider MySQL/sqlite/couchdb etc. compat.
