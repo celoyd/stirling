@@ -141,4 +141,20 @@ function preparebody($body) {
     return $body;
 }
 
+function get_lang($search) {
+	$lang = false;
+	if (!preg_match('/(index|lang:..)/',$search)) {
+		$f = readbyuri($cx,$search);
+		$lang = $f['lang'];
+	} else if (preg_match('/lang:(..)/',$search,$matches)) {
+		$lang = $matches[1];
+		if ($lang == "**") {
+			$lang = false;
+		}
+	} else if ($_SERVER['HTTP_ACCEPT_LANGUAGE']) {
+		preg_match('/(..)(-..)?/',$SERVER['HTTP_ACCEPT_LANGUAGE'],$matches);
+		$lang = $matches[1];
+	}
+}
+
 ?>
