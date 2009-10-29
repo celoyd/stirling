@@ -106,6 +106,7 @@ function wrappost($f, $class='post') {
 
 
 function posttohtml($f) {
+    global $base_uri;
 	$f['posted'] = ttime($f['posted']);
 	if (!$f['uri']) { $f['uri'] = $f['posted']; }
 //		if ($anchor) {
