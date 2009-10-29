@@ -1,11 +1,8 @@
 <?php
+include_once("config.php");
 include_once("markdown.php");
 
-$cx = pg_pconnect("host=localhost port=5432 dbname=naus user=char");
-
-$base_uri = "http://panthalassa.net/naus";
-
-$blog_title = "Naus";
+$cx = pg_pconnect($pg_connect_string);
 
 set_magic_quotes_runtime(0);
 
@@ -121,7 +118,7 @@ function posttohtml($f) {
 		if ($edited == $posted) { $edited = ''; }
 	} else { $edited = ''; }
 	
-	return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='http://panthalassa.net/naus/mod/?posted=${f[posted]}'>[edit]</a></p>\n";
+	return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='$base_uri/mod/?posted=${f[posted]}'>[edit]</a></p>\n";
 }
 
 function preparebody($body) { 
@@ -143,7 +140,5 @@ function preparebody($body) {
     }
     return $body;
 }
-
-$titlediv = "<div id='title'><h1><a href='/naus'>$blog_title</a></h1><br />by anonymous<br />Panthalassans<br />(<a href='/naus/about' style='border-bottom: 1px solid rgb(220, 225, 225);'>learn more</a>)</div>";
 
 ?>
