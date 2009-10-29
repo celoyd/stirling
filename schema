@@ -1,0 +1,7 @@
+create table post (
+	posted timestamp with time zone primary key,
+	uri text,
+	title text,
+	body text,
+	by text
+);
