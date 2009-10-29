@@ -7,7 +7,7 @@ Blog title, e-mail address, etc. Possibly also do a more baseline CSS.
 
 2. Pagination and permalinking.
 
-Possibly generate serial numbers for links. Time with microseconds may be a bad idea for primary key. Implausible as it is, it's not impossible for htere to be a collision on multiuser stuff.
+Possibly generate serial numbers for links. Time with microseconds may be a bad idea for primary key. Implausible as it is, it's not impossible for there to be a collision on multiuser stuff.
 
 
 3. Consider multiuser. Fix security.
