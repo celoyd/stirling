@@ -124,24 +124,25 @@ function posttohtml($f) {
 
 function preparebody($body) { 
     global $allowed_syntaxes;
+    $debug = "";
     preg_match_all('/^\/\/.+?$/m',$body,$directives);
     $body = preg_replace('/^\/\/.+?$/m','$1',$body);
     $body = str_replace('\\/','/',$body);
     foreach($directives[0] as $directive) {
-        echo "<!--directive: $directive -->\n";
+        $debug .= "<!--directive: $directive -->\n";
         $directive = preg_replace('/^\/\//','',$directive);
         $directive = explode(" ",rtrim($directive));
         switch($directive[0]) {
             case "syntax":
                 if (isset($allowed_syntaxes[$directive[1]])) {
-                    echo "<!--syntax ".$directive[1]." is permitted -->\n";
+                    $debug .= "<!--syntax ".$directive[1]." is permitted -->\n";
                     $body = $allowed_syntaxes[$directive[1]]($body);
                 }
             case "alias":
                 $body = str_replace($directive[1],$directive[2],$body);
         }
     }
-    return $body;
+    return $body . $debug;
 }
 
 function get_lang($search) {
