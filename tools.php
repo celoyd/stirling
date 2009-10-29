@@ -128,11 +128,13 @@ function preparebody($body) {
     $body = preg_replace('/^\/\/.+?$/m','$1',$body);
     $body = str_replace('\\/','/',$body);
     foreach($directives[0] as $directive) {
+        echo "<!--directive: $directive -->\n";
         $directive = preg_replace('/^\/\//','',$directive);
         $directive = explode(" ",rtrim($directive));
         switch($directive[0]) {
             case "syntax":
                 if (isset($allowed_syntaxes[$directive[1]])) {
+                    echo "<!--syntax ".$directive[1]." is permitted -->\n";
                     $body = $allowed_syntaxes[$directive[1]]($body);
                 }
             case "alias":
