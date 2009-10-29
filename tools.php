@@ -122,27 +122,41 @@ function posttohtml($f) {
 	return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='$base_uri/mod/?posted=${f[posted]}'>[edit]</a></p>\n";
 }
 
-function preparebody($body) { 
-    global $allowed_syntaxes;
-    $debug = "";
-    preg_match_all('/^\/\/.+?$/m',$body,$directives);
-    $body = preg_replace('/^\/\/.+?$/m','$1',$body);
-    $body = str_replace('\\/','/',$body);
+function posttohtml($f,$suppress_edit=false) {
+	global $allowed_syntaxes;
+
+    preg_match_all('/^\/\/.+?$/m',$f['body'],$directives);
+    $f['body'] = preg_replace('/^\/\/.+?$/m','$1',$f['body']);
+    $f['body'] = str_replace('\\/','/',$f['body']);
     foreach($directives[0] as $directive) {
-        $debug .= "<!--directive: $directive -->\n";
         $directive = preg_replace('/^\/\//','',$directive);
         $directive = explode(" ",rtrim($directive));
         switch($directive[0]) {
             case "syntax":
                 if (isset($allowed_syntaxes[$directive[1]])) {
-                    $debug .= "<!--syntax ".$directive[1]." is permitted -->\n";
-                    $body = $allowed_syntaxes[$directive[1]]($body);
+                    $f['body'] = $allowed_syntaxes[$directive[1]]($f['body']);
                 }
             case "alias":
-                $body = str_replace($directive[1],$directive[2],$body);
+                $f['body'] = str_replace($directive[1],$directive[2],$f['body']);
         }
     }
-    return $body . $debug;
+	$f['posted'] = ttime($f['posted']);
+	if (!$f['uri']) { $f['uri'] = $f['posted']; }
+		if ($anchor) {
+	$anchorclause = "<span class='anchor'><a href='${f[uri]}'><!-- &#x25cc; -->※</a> </span>";
+	} else { $anchorclause = ''; }
+	$posted = justdate($f['posted']);
+
+	if ($f['edited']) {
+		$edited = "*";
+		if ($edited == $posted) { $edited = ''; }
+	} else { $edited = ''; }
+	
+	if ($suppress_edit) {
+		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "\n";
+	} else {
+		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='http://fearchar.net/tan-sec/mod?posted=${f[posted]}'>[edit]</a></p>\n";
+	} 
 }
 
 function get_lang($search) {
