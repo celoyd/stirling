@@ -8,6 +8,8 @@ set_magic_quotes_runtime(0);
 
 $allowed_syntaxes = array("markdown"=>Markdown);
 
+// all this time stuff is pretty gross
+
 $timestamp = gmdate("Y-m-d\TH:i:s\Z", time());
 
 function ttime($t) {
