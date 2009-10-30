@@ -142,20 +142,4 @@ function posttohtml($f,$suppress_edit=false) {
 	} 
 }
 
-function get_lang($search,$suggestion) {
-	$lang = false;
-	if (!preg_match('/(index|lang:..)/',$search)) {
-		$f = readbyuri($cx,$search);
-		$lang = $f['lang'];
-	} else if (preg_match('/lang:(..)/',$search,$matches)) {
-		$lang = $matches[1];
-		if ($lang == "**") {
-			$lang = false;
-		}
-	} else if ($suggestion) {
-		preg_match('/(..)(-..)?/',$suggestion,$matches);
-		$lang = $matches[1];
-	}
-}
-
 ?>

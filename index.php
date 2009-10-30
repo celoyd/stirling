@@ -4,7 +4,22 @@ $t0 = microtime(1);
 include_once('tools.php');
 
 if ($polyglot) {
-	$lang = get_lang($_GET['search'],$_SERVER['HTTP_ACCEPT_LANGUAGE']);
+    $lang = false;
+
+        if ($_GET['search'] != 'index.php' and !preg_match('/lang:../',$_GET['search'])) {
+            $f = readbyuri($cx,$_GET['search']);
+            $lang = $f['lang'];
+        } else if (preg_match('/lang:../',$_GET['search'],$matches)) {
+            $lang = preg_replace('/lang:(..)/','$1',$matches[0]);
+            if ($lang == "**") {
+                $lang = false;
+            }
+        } else {
+            if ($_SERVER['HTTP_ACCEPT_LANGUAGE']) {
+                preg_match('/(..)(-..)?/',$_SERVER['HTTP_ACCEPT_LANGUAGE'],$matches);
+                $lang = $matches[1];
+            }
+        }
 }
 ?>
 <!DOCTYPE html 
