@@ -105,25 +105,8 @@ function wrappost($f, $class='post') {
 	return "<div class='$class'>" . posttohtml($f) . "</div>\n\n"; }
 
 
-function posttohtml($f) {
-    global $base_uri;
-	$f['posted'] = ttime($f['posted']);
-	if (!$f['uri']) { $f['uri'] = $f['posted']; }
-//		if ($anchor) {
-//	$anchorclause = "<span class='anchor'><a href='${f[uri]}'><!-- &#x25cc; -->※</a> </span>";
-//	} else { $anchorclause = ''; }
-	$posted = justdate($f['posted']);
-
-	if ($f['edited']) {
-		$edited = "*";
-		if ($edited == $posted) { $edited = ''; }
-	} else { $edited = ''; }
-	
-	return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='$base_uri/mod/?posted=${f[posted]}'>[edit]</a></p>\n";
-}
-
 function posttohtml($f,$suppress_edit=false) {
-	global $allowed_syntaxes;
+	global $allowed_syntaxes,$base_uri;
 
     preg_match_all('/^\/\/.+?$/m',$f['body'],$directives);
     $f['body'] = preg_replace('/^\/\/.+?$/m','$1',$f['body']);
