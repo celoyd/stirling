@@ -4,7 +4,7 @@ $t0 = microtime(1);
 include_once('tools.php');
 
 if ($polyglot) {
-	$lang = get_language($_GET['search']);
+	$lang = get_lang($_GET['search']);
 }
 echo "<!DOCTYPE html 
 	PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
