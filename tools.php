@@ -35,11 +35,20 @@ function justdate($d) {
 	$phpsux = explode(array(' ', 'T'), $d);
 	return $phpsux[0]; }
 
-function createpost($cx, $title, $body, $uri='') {
+function createpost($cx, $title, $body, $uri='', $lang='') {
+    global $polyglot;
 	try {
-		$qy = pg_prepare($cx, 'createpost', 'insert into post (title, body, uri, posted) values ($1, $2, $3, now())');
+        if (!$polyglot) {
+		    $qy = pg_prepare($cx, 'createpost', 'insert into post (title, body, uri, posted) values ($1, $2, $3, now())');
+        } else {
+            $qy = pg_prepare($cx, 'createpost', 'insert into post (title, body, uri, lang, posted) values($1, $2, $3, $4, now())');
+        }
 	} catch (Exception $e) { }
-	pg_execute($cx, 'createpost', array($title, $body, $uri)); }
+    if (!$polyglot) {
+	    pg_execute($cx, 'createpost', array($title, $body, $uri));
+    } else {
+        pg_execute($cx, 'createpost', array($title, $body, $uri, $lang)); }
+}
 
 function readpost($cx, $id) {
 	$qy = pg_query_params($cx, 'select * from post where posted = $1', array($id));
@@ -50,13 +59,8 @@ function readpost($cx, $id) {
 	return $post;
 }
 
-function readtoc($cx,$lang=false) {
-    global $polyglot;
-    if ($polyglot and $lang) {
-        $qy = pg_query($cx, "select posted from post where lang='$lang' order by posted desc;");
-    } else {
- 	    $qy = pg_query($cx, 'select posted from post order by posted desc;');
-    }
+function readtoc($cx) {
+ 	$qy = pg_query($cx, 'select posted from post order by posted desc;');
  	$fms = pg_fetch_all($qy);
  	return $fms;
 }
@@ -79,17 +83,25 @@ function readbyposted($cx, $uri) {
  	return clean($fms);
 }
 
-function updatepost($cx, $posted, $title, $body, $uri) {
-	pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3 where posted = $4', array($title, $body, $uri, $posted));
+function updatepost($cx, $posted, $title, $body, $uri, $lang=false) {
+    global $polyglot;
+    if (!$polyglot) {
+	    pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3 where posted = $4', array($title, $body, $uri, $posted));
+    } else {
+        pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3, lang = $4 where posted = $5',array($title, $body, $uri, $lang, $posted));
+    }
 }
 
 function deletepost($cx, $id) {
 	$qy = pg_query_params($cx, 'delete from post where posted = $1', array($id)); }
 
-function editform($posted='', $uri='', $title='', $body='') {
+function editform($posted='', $uri='', $title='', $body='', $lang='') {
 	if ($posted) {
-		$ck = "<input name='doom' type='checkbox' value='unchecked' />";
+		$ck = "<label for='doom'>delete? </label><input name='doom' type='checkbox' value='unchecked' />";
 	} else { $ck = ''; }
+    if ($polyglot) {
+        $langbox = "<p><label for='lang'>language </label><input name='lang' type='text' style='width: 15em;' value=\"$lang\"/></p>\n";
+    } else { $langbox = ''; }
 
 // escape the double quotes in the $uri and $title
 
@@ -97,9 +109,9 @@ function editform($posted='', $uri='', $title='', $body='') {
 	$uri = str_replace('"','\"',$uri);
 	return "<form action='./' method='post' accept-charset='UTF-8'>
 	<p><input type='hidden' name='posted' value='$posted' /></p>
-	<p><input name='title' type='text' style='width: 30em;' value=\"$title\"/></p>
-	<p><input name='uri' type='text' style='width: 15em;' value=\"$uri\"/></p>
-	<p><textarea name='body' style='width: 45em; height: 30em'>$body</textarea></p>
+	<p><label for='title'>Title: </label><input name='title' type='text' style='width: 30em;' value=\"$title\"/></p>
+	<p><label for='URI'>URI: </label><input name='uri' type='text' style='width: 15em;' value=\"$uri\"/></p>
+    $langbox<p><textarea name='body' style='width: 45em; height: 30em'>$body</textarea></p>
 	<p> $ck <input type='submit' value='&darr;' accesskey='s' /></p>
 </form>";
 }
@@ -146,5 +158,4 @@ function posttohtml($f,$suppress_edit=false) {
 		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='http://fearchar.net/tan-sec/mod?posted=${f[posted]}'>[edit]</a></p>\n";
 	} 
 }
-
 ?>
