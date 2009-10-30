@@ -55,7 +55,7 @@ window.onload = function () {
 echo $titlediv;
 echo "<div id='main'>";
 
-if ($_GET['search'] != 'index.php') {
+if (!preg_match('/(index|lang:..)/',$_GET['search'])) {
 	$f = readbyuri($cx, $_GET['search']);
 	if ($f['uri']) {
 		echo wrappost($f, $class='post');
