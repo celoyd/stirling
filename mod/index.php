@@ -3,19 +3,19 @@ include_once('../tools.php');
 
 if (isset($_POST['doom'])) {
 	deletepost($cx, $_POST['posted']);
-	Header('Location: ../../naus');
+	Header('Location: ' . $base_uri);
 	exit();
 }
 
 if (!($_POST['posted']) && isset($_POST['body'])) {
-	createpost($cx, $_POST['title'], preparebody($_POST['body']), $_POST['uri']);
-	Header('Location: ../../naus');
+	createpost($cx, $_POST['title'], $_POST['body'], $_POST['uri']);
+	Header('Location: ' . $base_uri);
 	exit();
 }
 
 if ($_POST['posted']) {
-	updatepost($cx, $_POST['posted'], $_POST['title'], preparebody($_POST['body']), $_POST['uri']);
-	Header('Location: ../../naus');
+	updatepost($cx, $_POST['posted'], $_POST['title'], $_POST['body'], $_POST['uri']);
+	Header('Location: ' . $base_uri);
 	exit();
 }
 
