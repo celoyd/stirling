@@ -6,10 +6,18 @@ include_once('tools.php');
 if ($polyglot) {
 	$lang = get_lang($_GET['search']);
 }
-echo "<!DOCTYPE html 
+?>
+<!DOCTYPE html 
 	PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN'
-	'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
-	<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='$lang' lang='$lang'>\n";
+	'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>";
+<?php
+if ($lang) {
+    echo "<!-- language determined as $lang -->\n";
+    echo "	<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='$lang' lang='$lang'>\n";
+} else {
+    echo "<!-- language defaulted to en -->\n";
+    echo "	<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>\n";
+}
 ?>
 	<head>
 		<?php echo "<title>$blog_title</title>\n"; ?>
