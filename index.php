@@ -81,7 +81,7 @@ if (!preg_match('/(index|lang:..)/',$_GET['search'])) {
 } else {
 
 	$toc = array(); // php sux
-	foreach (readtoc($cx) as $c) {
+	foreach (readtoc($cx,$lang) as $c) {
 		array_push($toc, $c['posted']); }
 	
 	$chunksize = 5;
