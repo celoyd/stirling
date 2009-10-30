@@ -4,7 +4,7 @@ $t0 = microtime(1);
 include_once('tools.php');
 
 if ($polyglot) {
-	$lang = get_lang($_GET['search']);
+	$lang = get_lang($_GET['search'],$_SERVER['HTTP_ACCEPT_LANGUAGE']);
 }
 ?>
 <!DOCTYPE html 
@@ -12,10 +12,8 @@ if ($polyglot) {
 	'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>";
 <?php
 if ($lang) {
-    echo "<!-- language determined as $lang -->\n";
     echo "	<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='$lang' lang='$lang'>\n";
 } else {
-    echo "<!-- language defaulted to en -->\n";
     echo "	<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>\n";
 }
 ?>
