@@ -21,8 +21,6 @@ function unttime($t) {
 function rfc3339($t) {
 	preg_match_all("|(....-..-..) (..:..:..)\.[0-9]*([-+]..).*|", $t, $o, PREG_PATTERN_ORDER);
 	return $o[1][0] . "T" . $o[2][0] . $o[3][0] . ":00"; // bad, bad, bad
-//	return print_r($o);
-//	return "hi";
 }
 
 function clean($post) {
