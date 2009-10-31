@@ -92,7 +92,7 @@ function readbyposted($cx, $uri) {
 function updatepost($cx, $posted, $title, $body, $uri, $lang=false) {
     global $polyglot;
     if (!$polyglot) {
-	    pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3 where posted = $4', array($title, $body, $uri, $posted));
+	    pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3, lang = $4 where posted = $5', array($title, $body, $uri, $lang, $posted));
     } else {
         pg_query_params($cx, 'update post set title = $1, body = $2, uri = $3, lang = $4 where posted = $5',array($title, $body, $uri, $lang, $posted));
     }
