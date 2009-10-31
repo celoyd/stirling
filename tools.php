@@ -59,8 +59,13 @@ function readpost($cx, $id) {
 	return $post;
 }
 
-function readtoc($cx) {
- 	$qy = pg_query($cx, 'select posted from post order by posted desc;');
+function readtoc($cx,$lang=false) {
+    global $polyglot;
+    if ($polyglot and $lang) {
+        $qy = pg_query($cx, "select posted from post where lang='$1' order by posted desc", array($lang));
+    } else {
+ 	    $qy = pg_query($cx, 'select posted from post order by posted desc;');
+    }
  	$fms = pg_fetch_all($qy);
  	return $fms;
 }

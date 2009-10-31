@@ -43,10 +43,16 @@ if ($_POST['posted']) {
 <code>//alias foo bar</code> will replace any instance of foo with bar.</p>
 
 <?php
+global $polyglot;
 
 if (isset($_GET['posted'])) {
 	$p = readpost($cx, $_GET['posted']);
-	echo editform($p['posted'], $p['uri'], $p['title'], $p['body']);
+    if ($polyglot) {
+	    echo editform($p['posted'], $p['uri'], $p['title'], $p['body'], $p['lang']);
+    } else {
+	    echo editform($p['posted'], $p['uri'], $p['title'], $p['body']);
+    }
+        
 } else {
 	echo editform();
 }
