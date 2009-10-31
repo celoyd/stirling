@@ -1,5 +1,6 @@
 <?php
 include_once('../tools.php');
+global $polyglot;
 
 if (isset($_POST['doom'])) {
 	deletepost($cx, $_POST['posted']);
@@ -8,13 +9,21 @@ if (isset($_POST['doom'])) {
 }
 
 if (!($_POST['posted']) && isset($_POST['body'])) {
-	createpost($cx, $_POST['title'], $_POST['body'], $_POST['uri']);
+    if ($polyglot) {
+        createpost($cx, $_POST['title'], $_POST['body'], $_POST['uri'], $_POST['lang']);
+    } else {
+	    createpost($cx, $_POST['title'], $_POST['body'], $_POST['uri']);
+    }
 	Header('Location: ' . $base_uri);
 	exit();
 }
 
 if ($_POST['posted']) {
-	updatepost($cx, $_POST['posted'], $_POST['title'], $_POST['body'], $_POST['uri']);
+    if ($polyglot) {
+	    updatepost($cx, $_POST['posted'], $_POST['title'], $_POST['body'], $_POST['uri'], $_POST['lang']);
+    } else {
+	    updatepost($cx, $_POST['posted'], $_POST['title'], $_POST['body'], $_POST['uri']);
+    }
 	Header('Location: ' . $base_uri);
 	exit();
 }
