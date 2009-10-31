@@ -96,6 +96,7 @@ function deletepost($cx, $id) {
 	$qy = pg_query_params($cx, 'delete from post where posted = $1', array($id)); }
 
 function editform($posted='', $uri='', $title='', $body='', $lang='') {
+    global $polyglot;
 	if ($posted) {
 		$ck = "<label for='doom'>delete? </label><input name='doom' type='checkbox' value='unchecked' />";
 	} else { $ck = ''; }
