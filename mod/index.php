@@ -30,20 +30,10 @@ if ($_POST['posted']) {
 	</head>
 	<body>
 
-<blockquote style='font-family: Minion Pro; font-style: italic; margin-left: 0' xml:lang='ru'>
-<span title='I was whole and I was broken'>Целым был и был разбитым,</span><br />
-<span style='margin-left: 1.5em;' title='I was alive and I was dead'>Был живым и был убитым,</span><br />
-<span title='I was clear water, I was poison'>Частой был водой, был ядом</span><br />
-<span style='margin-left: 1.5em;' title='I was green grapes on the vine'>Был зеленым виноградом;</span><br />
-<span title='Sleep lies in the early morning, in the evenings'>Спать ложился рано утром, вечерами</span><br />
-<span style='margin-left: 1.5em;' title='Everything calls someone.'>Всë взонил кому-то.</span>
-</blockquote>
+<?php 
+global $polyglot,$mod_quote;
 
-<p style='margin-left: 1.5em;'><code>//syntax markdown</code> will parse your post as Markdown;<br />
-<code>//alias foo bar</code> will replace any instance of foo with bar.</p>
-
-<?php
-global $polyglot;
+echo $mod_quote;
 
 if (isset($_GET['posted'])) {
 	$p = readpost($cx, $_GET['posted']);
