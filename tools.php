@@ -71,8 +71,13 @@ function readtoc($cx,$lang=false) {
  	return $fms;
 }
 
-function readnlatest($cx, $n) {
- 	$qy = pg_query_params($cx, 'select * from post order by posted desc limit $1', array($n));
+function readnlatest($cx, $n, $lang=false) {
+    global $polyglot;
+    if ($polyglot and $lang) {
+        $qy = pg_query_params($cx, "select * from post where lang='$1' order by posted desc limit $2", array($lang, $n));
+    } else {
+ 	    $qy = pg_query_params($cx, 'select * from post order by posted desc limit $1', array($n));
+    }
  	$fms = pg_fetch_all($qy);
  	return array_map("clean", $fms);
 }
@@ -162,7 +167,7 @@ function posttohtml($f,$suppress_edit=false) {
 	if ($suppress_edit) {
 		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "\n";
 	} else {
-		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='http://fearchar.net/tan-sec/mod?posted=${f[posted]}'>[edit]</a></p>\n";
+		return "\n<h1 title='$posted$edited'><a href='${f[uri]}'>${f[title]}</a></h1>\n\n" . "${f[body]}\n\n" . "<p class='editlink'><a href='$base_uri/mod?posted=${f[posted]}'>[edit]</a></p>\n";
 	} 
 }
 ?>
