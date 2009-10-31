@@ -62,7 +62,7 @@ function readpost($cx, $id) {
 function readtoc($cx,$lang=false) {
     global $polyglot;
     if ($polyglot and $lang) {
-        $lang = mysql_real_escape_string($lang);
+        $lang = pg_escape_string($cx,$lang);
         $qy = pg_query($cx, "select posted from post where lang='$lang' order by posted desc");
     } else {
  	    $qy = pg_query($cx, 'select posted from post order by posted desc;');
