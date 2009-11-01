@@ -28,6 +28,7 @@ if ($_POST['posted']) {
 	exit();
 }
 
+global $polyglot,$mod_quote,$base_uri;
 
 ?><!DOCTYPE html 
 	PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
@@ -36,13 +37,12 @@ if ($_POST['posted']) {
 	<head>
 		<title>Mod</title>
 <?php
-echo "      <link rel='stylesheet' href='$base_uri/req/ship.css' type='text/css' />\n";
+echo "      <link rel='stylesheet' href='$base_uri/req/ship' type='text/css' />\n";
 ?>
 	</head>
 	<body>
 
 <?php 
-global $polyglot,$mod_quote;
 
 echo $mod_quote;
 
