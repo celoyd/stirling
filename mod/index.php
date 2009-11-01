@@ -35,7 +35,9 @@ if ($_POST['posted']) {
 	<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 	<head>
 		<title>Mod</title>
-		<link rel="stylesheet" href="/ship" type='text/css' />
+<?php
+echo "      <link rel='stylesheet' href='$base_uri/req/ship.css' type='text/css' />\n";
+?>
 	</head>
 	<body>
 

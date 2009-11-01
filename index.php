@@ -35,8 +35,8 @@ if ($lang) {
 	<head>
 		<?php echo "<title>$blog_title</title>\n"; ?>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-		<link rel="stylesheet" href="/ship" type='text/css' />
 <?php
+echo "      <link rel='stylesheet' href='$base_uri/req/ship' type='text/css' />\n";
 echo "		<link rel='alternate' type='application/atom+xml' title='Atom' href='$base_uri/atom' />\n";
 ?>
 		<script type="text/javascript" src="/jquery-1.3.2.min.js"></script>
