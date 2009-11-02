@@ -6,7 +6,7 @@ $blog_title = "Stirling";
 $titlediv = "<div id='title'><h1><a href='/naus'>$blog_title</a></h1><br />
 	by anonymous<br />
 	Panthalassans<br />
-	(<a href='/naus/about' style='border-bottom: 1px solid rgb(220, 225, 225);'>learn more</a>)</div>";
+	(<a href='/naus/about' id='about'>learn more</a>)</div>";
 $mod_quote = "<blockquote id='mod_quote'>Über allen Gipfeln<br />
 <span style='margin-left: 1.5em;'>Ist Ruh,<br />
 In allen Wipfeln<br />
