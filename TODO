@@ -32,3 +32,9 @@ Possibly generate serial numbers for links. Time with microseconds may be a bad 
 
 
 10. Search
+
+
+11. Test on different installs to make sure content negotiation etc. work.
+
+
+12. Rename /mod?
