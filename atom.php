@@ -2,11 +2,10 @@
 Header("Content-Type: application/atom+xml");
 include_once('tools.php');
 $latest = readnlatest($cx, 16);
-$authorclause = "<author>
-		<name>Panthalassans</name>
-		<uri>http://panthalassa.net/</uri>
-		<email>naus@panthalassa.net</email>
-	</author>";
+// remove this next bit once everybody gets their author clause all set up
+if (!$authorclause) {
+    $authorclause = "<author></author>\n";
+}
 
 echo "<?xml version='1.0' encoding='utf-8'?>
 <feed xmlns='http://www.w3.org/2005/Atom'>
