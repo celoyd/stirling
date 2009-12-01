@@ -35,7 +35,7 @@ foreach ($latest as $post) {
 	}
 	echo "<id>tag:panthalassa.net,2009:" . urlencode(rfc3339($post['posted'])) . "</id>
 	<content type='html'>
-	" . htmlspecialchars($post['body']) . "
+	" . htmlspecialchars(posttohtml($post['body'],true)) . "
 	</content>
 	</entry>";
 }
