@@ -47,7 +47,7 @@ update = function (e) {
 
 		k = $("div.post:last").next();
 		if (k.attr('class') == 'stub') {
-			k.load("just?id=" + $("div.stub:first").attr('id'));
+			k.load("just?id=" + $("div.stub:first").attr('id').replace('t',''));
 			k.attr({'class': 'post'});
 			k.fadeIn(1000);
 			return true; } }
@@ -95,7 +95,7 @@ if (!preg_match('/(index|lang:..)/',$_GET['search'])) {
 	
 	foreach ($stubs as $stub) {
 		$stub = ttime($stub);
-		echo "<div class='stub' style='display: none' id='$stub'></div>\n";
+		echo "<div class='stub' style='display: none' id='t$stub'></div>\n";
 	}
 
 }
