@@ -1,22 +1,32 @@
 In no particular order, and not all necessarily a good idea.
 
-1. Separate out all configuration.
+1. Make a more baseline CSS and commit it -- source another CSS file as well.
 
-Blog title, e-mail address, etc. Possibly also do a more baseline CSS.
+We've got CSS, but do we even have it committed? Maybe it's committed but just
+different? I forget. Anyhow, if it's tracked with git but varies from one 
+install to another, create a base one that makes perfect sense, and then create
+css-local.css or something. Also, why /ship.css when it isn't Naus?
 
 
 2. Pagination and permalinking.
 
 Possibly generate serial numbers for links. Time with microseconds may be a bad idea for primary key. Implausible as it is, it's not impossible for there to be a collision on multiuser stuff.
 
+Multi-user stuff seems like the only time we'd conceivably have collision. 
+Maybe instead of microtime, use as a primary key the hash of the microtime and
+the source's IP address?
+
 
 3. Consider multiuser. Fix security.
+
+Check out http digest auth for this instead of just using http basic -- much 
+cleaner.
 
 
 4. Tags? Keep database normalized.
 
 
-5. /mod/ -- rename, add text fields, etc.
+5. /mod/ -- rename?
 
 
 6. Make everything localiz(able|ed).
@@ -33,8 +43,9 @@ Possibly generate serial numbers for links. Time with microseconds may be a bad 
 
 10. Search
 
+Search could be incorporated with a 404 error. If it can't find the URI you 
+asked for, it could search for uris that are very much like the one you asked
+for.
+
 
 11. Test on different installs to make sure content negotiation etc. work.
-
-
-12. Rename /mod?
